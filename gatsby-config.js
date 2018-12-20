@@ -5,5 +5,5 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
   ],
-  pathPrefix: "/reponame",
+  pathPrefix: "/contentco-test",
 }
