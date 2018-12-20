@@ -1,5 +1,6 @@
 const axios = require('axios');
 const crypto = require('crypto');
+const path = require("path");
 
 exports.sourceNodes = async ({ boundActionCreators }) => {
   const { createNode } = boundActionCreators;
@@ -51,4 +52,33 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
 
   // We're done, return.
   return;
+};
+
+exports.createPages = ({ graphql, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
+  return new Promise((resolve, reject) => {
+    graphql(`
+      {
+        allPosts {
+          edges {
+            node {
+              slug
+            }
+          }
+        }
+      }
+    `).then(result => {
+      result.data.allPosts.edges.forEach(({ node }) => {
+        createPage({
+          path: node.slug,
+          component: path.resolve(`./src/templates/post.js`),
+          context: {
+            // Data passed to context is available in page queries as GraphQL variables.
+            slug: node.slug,
+          },
+        })
+      })
+      resolve()
+    })
+  })
 };
