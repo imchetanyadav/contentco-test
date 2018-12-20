@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'gatsby-link'
 
 class IndexPage extends React.Component {
   
@@ -16,7 +17,9 @@ class IndexPage extends React.Component {
                   <img src={node.featured_image} style={{maxWidth: '250px'}} />
                 </div>
                 <div style={{paddingLeft: '2rem'}}>
-                  <h2>{node.title}</h2>
+                  <Link to={`/${node.slug}`} style={{textDecoration: 'none',color: '#000'}}>
+                    <h2>{node.title}</h2>
+                  </Link>
                   <p>{node.excerpt}</p>
                 </div>
               </div>
@@ -39,6 +42,7 @@ export const query = graphql`
           title
           excerpt
           featured_image
+          slug
         }
       }
     }
