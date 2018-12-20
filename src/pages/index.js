@@ -1,20 +1,37 @@
 import React from 'react'
-import Section1 from '../components/home/Section1'
-import Section2 from '../components/home/Section2'
-import Section3 from '../components/home/Section3'
 
 class IndexPage extends React.Component {
-
+  
   render() {
+    const posts = this.props.data.allPosts.edges;
     
     return (
       <div>
-        <Section1 />
-        <Section2 />
-        <Section3 />
+        Article List
+        {posts.map(({ node }) => {
+          return (
+            <div key={node.id}>
+              <p>Title: {node.title}</p>
+              {/* <img src={userData.picture.medium} /> */}
+            </div>
+          )
+        })}
       </div>
     )
   }
 }
 
 export default IndexPage
+
+export const query = graphql`
+  query RandomUserQuery {
+    allPosts {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
+  }
+`;
