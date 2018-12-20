@@ -4,18 +4,25 @@ class IndexPage extends React.Component {
   
   render() {
     const posts = this.props.data.allPosts.edges;
-    
+
     return (
-      <div>
-        Article List
-        {posts.map(({ node }) => {
-          return (
-            <div key={node.id}>
-              <p>Title: {node.title}</p>
-              {/* <img src={userData.picture.medium} /> */}
-            </div>
-          )
-        })}
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <div style={{maxWidth: '800px'}}>
+          <h1>Article List</h1>
+          {posts.map(({ node }) => {
+            return (
+              <div key={node.id} style={{display: 'flex', marginBottom: '2rem'}}>
+                <div>
+                  <img src={node.featured_image} style={{maxWidth: '250px'}} />
+                </div>
+                <div style={{paddingLeft: '2rem'}}>
+                  <h2>{node.title}</h2>
+                  <p>{node.excerpt}</p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }
@@ -30,6 +37,8 @@ export const query = graphql`
         node {
           id
           title
+          excerpt
+          featured_image
         }
       }
     }
